@@ -41,6 +41,9 @@
     "prodDatabaseType": "no",
     "clientPackageManager": "npm",
     "clientThemeVariant": "",
-    "languages": ["en", "fr"]
+    "languages": ["en", "fr"],
+    "herokuAppName": "urlpdfconverter",
+    "herokuDeployType": "jar",
+    "herokuJavaVersion": "11"
   }
 }
