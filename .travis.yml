@@ -1,4 +1,12 @@
 language: java
 jdk: openjdk11
+
+addons:
+  sonarcloud:
+    organization: "project-quatum"
+    token:
+      secure: "kEC5PW9rjz3eraNgI+XDNUy5oly4TUYsuTGYinFoY648P+yj0NpCMTqTSiMscM3UmBCbV/XqdDEKLP3UjAP51e+sYH73QrVKJ6jUqkCriirQN9STyY6hJdcyosIKXM/GziJWofmRc+OrXN39xzhovzryUbRqvJHaGfmfJjimb2IrSNxqykXIIQLlh4Sc+gwTXHqVyxYvBac29OZV8nYC55FQV5eeNuIorNegumtTynVGOoBiwApcxypXh1veTKM/TCnvwrWKjeC9f1OoW30QOGSCpE20PTmAfxKRTm/4pTYVqguCyjCM2vSl19rZppuM/OPJJi4xHWZ65JHkiGJogQM95o6R0RPuQ1xG5Ka20C0mU7RYATqY5rWe9MUORltx8UK8Z18P059Iuoum+mRNjt500D8coU1C5dRPko0cT3Xk71PJ7D/w4K6GY2VoDdpXWAawDNgT11Y4XM2C7fXZS76tF3iOw1E7hv6xeTh3kYkyyIG/nJTjW8s4hYbiPwhe7yr6qouHNEuSFUxIc7VavDkeV1kKvBLjti0tlil6UouexbhLb0aGVMYwTaGTtWnNfZ8sfYn6Vz9SwFvnXc/pPX4G6rJ+LjV0b1j6LmjEiVYv0JsilRaUZngaEGTn3s7DfSo1KfHw4Qkzqf7wFhuD7LwBYtTZmeLNGnPOUMuiu1Q=" # encrypted value of your token
+
 script:
-  - echo 'Test'
+  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
+  - mvn clean verify sonar:sonar -Pcoverage -Dsonar.projectKey=Project-Quatum_url-to-pdf
