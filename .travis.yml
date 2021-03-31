@@ -1,7 +1,5 @@
-language: node_js
-
-node_js:
-  - "10"
+language: java
+jdk: openjdk11
 
 cache:
   directories:
