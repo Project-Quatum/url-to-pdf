@@ -1,6 +1,11 @@
 language: java
 jdk: openjdk11
 
+cache:
+  directories:
+    - '$HOME/.m2/repository'
+    - '$HOME/.sonar/cache'
+    
 addons:
   sonarcloud:
     organization: "project-quatum"
@@ -9,4 +14,5 @@ addons:
 
 script:
   # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
-  - sonar-scanner
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -Dsonar.login=$urlpdfconverter -Dsonar.projectKey=Project-Quatum_url-to-pdf -DskipTests
+
