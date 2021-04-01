@@ -1,25 +1,15 @@
 language: java
-jdk:
-  - openjdk11
-  
-env:
-  - NODE_VERSION="10"
-
-before_install:
-  - nvm install $NODE_VERSION
-
+jdk: openjdk11
+env: NODE_VERSION="10"
+before_install: nvm install $NODE_VERSION
 cache:
-  directories:
-    - '$HOME/.m2/repository'
-    - '$HOME/.sonar/cache'
-
+directories: -'$HOME/.m2/repository'
+  -'$HOME/.sonar/cache
 addons:
-  sonarcloud:
-    organization: "project-quatum"
-    token: "J0J5gy+JUfjOtdQ5zhcLdpHVncPPjPs2wIAJDUt2g2Kap2KU/vcjzOwkq9WNHh7tRQz4LYdMuuVTp2ZHlZVvUS81PnA2+r6Zy+iKnm1aOvvAiciZ0GM6QKQlGK2Kz0cw9/k4eQYBgNijODu+UqjrzVxagIcniExzT5HnxxTT/ogFUUheYASYDCgTqlW73RrLIzKZEL7Sz4dQcPmQAS1DveWhW9eeZTmPgs1jmcV6Uxtt7X8zd21k35bTO/li+6q24/YF/nzFIZhH6WXxhZGx6S229DalFV0wK01x2Kt6wC00MAfgdvvyXRNZqdHZ6Z/UxzKJkllyPB35G3dHjnSp/prtiNhs67RTAlzIQEsSmhwnNtI1krKFNmcuPAmhptQZlM12bhj3NqTlLwybtBqs73pqcFyq/5VbGPearu3nmuQx8oPV225eRSZtKhT9Pr6rgybE6OtNAP0y/cjK1/jbaRB/yhav8WKbgwyZLiQAYV0r9d9UUgMw2ywxsMv2gK8IAWzkxujcJNPBAJLqtfEKhBUFCOdLq6e3C8mrZtgq3zSRMaAPoXRm+AMeWHfJNvAnh1GBCzQNxE8Smkv7/55YsTAgbrBz944IiB2NQ0Ybllioxdlenc6MYLqI0XfqXKD+a8pYFWGbHFall32rj3p667zyakOIYSx82tUL9YDJxUg=" # encrypted value of your token
-
+sonarcloud:
+organization: 'project-quatum'
+token:
+  secure: 'i4XHgiCcAFQVL9Gb3zi/DQ3MeeyiIsslzZw0Y+bj+dgP9JxqZoVivmHmhza54XP2WGWrPfwQ7B+CsKbXmRl2gGQfzYBd3llv/i4SpNZS2LIZXnbXyteb1ZBiRj1aIdfZoRHvp/h/uZShZfLJojvLPksbGuI1aZIrJbANfvzcFeTX7XbL93mnzDqC+LI8JQRSSC+AKD5rFRxTsz6/UUQHL3WjPn61CfOueU9DFCft1y0OYd9SxictCePlD0DDjIs9HEggPCAMqSG0cERDR6YTTqB++dBBW/FHNgI8UpEfcwMDzb2JGZYT5WrlTjFFuvtpjDpXb5TYIJvaXhAQdFKko0r5Y8avAfBG+D8MDxSS5Hg0l2tR9KlZBJx2f/Mjl6VJU3i53IG2gTpdgJ5U4T9ak8PQR6idfAxOfrrFPf191VYCxrb4Py5rR6sj/LKqdKUeIIhVM+rjAujyUEF9A7r6yLXb30op58zObP1tzTQY3tEPnCiRSsE3KRuGrIHL7GQxRy95nPNnnZttHAaWXDA8D5g/LWvlPbWa7O9AyyDLqfgLqrJMi+HO3eLM7OLV3XAwJpfzhveztacFCYaoWJxA9oXb8hYK2K1rKn+x03qxBCqA29wRpOFReMCkOutQbLJsJVrkm/5Lbkwoj4BsIdEeZJ1qUjhLgkIzQyWKoR3DCOo=' # encrypted value of your token
 script:
-  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
-  #- mvn clean install verify sonar:sonar -Dsonar.login=$urlpdfconverter -Dsonar.projectKey=Project-Quatum_url-to-pdf -DskipTests
-  #- sonar-scanner -Dsonar.login=$urlpdfconverter -Dsonar.projectKey=Project-Quatum_url-to-pdf -DskipTests
-  - mvn clean verify sonar:sonar -Pcoverage -Dsonar.login=$urlpdfconverter -Dsonar.projectKey=Project-Quatum_url-to-pdf
+  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis 1
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.login=$urlpdfconverter -Dsonar.projectKey=Project-Quatum_url-to-pdf -Dsonar.host.url=https://sonarcloud.io
