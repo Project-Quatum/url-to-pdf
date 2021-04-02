@@ -250,6 +250,14 @@
             <artifactId>pdfbox</artifactId>
             <version>3.0.0-SNAPSHOT</version>
         </dependency>
+
+        <!-- selenium -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>3.141.59</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
