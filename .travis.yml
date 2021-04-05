@@ -45,6 +45,10 @@ script:
   - npm run ci:frontend:test
   - npm run java:jar:prod
   - ./mvnw -ntp com.heroku.sdk:heroku-maven-plugin:2.0.5:deploy -DskipTests -Pprod -Dheroku.buildpacks=heroku/jvm -Dheroku.appName=urlpdfconverter
+deploy:
+provider: heroku
+api_key:
+  secure: 'f65926ac-54da-490d-a622-9f3aabbc2596'
 
 notifications:
   webhooks:
