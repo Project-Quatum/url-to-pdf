@@ -30,8 +30,6 @@ export const Home = (props: IHomeProp) => {
       <header className="header">
         <div>
           <h1>A website to PDF converter</h1>
-          <br />
-          <h4>A COMP.SE.120 Project Assignment</h4>
         </div>
       </header>
       <main>
