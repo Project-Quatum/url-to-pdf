@@ -1,7 +1,6 @@
 package fi.tuni.project.quantum.service;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 import javax.annotation.Nonnull;
@@ -18,25 +17,22 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
 @Service
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class CreatePdfFromUrlImpl implements CreatePdfFromUrl {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CreatePdfFromUrl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CreatePdfFromUrlImpl.class);
 
     private ChromeOptions chromeOptions;
 
     @Autowired
-    private ResourceLoader resourceLoader;
+    private DriverService driverService;
 
     @PostConstruct
-    public void init() throws IOException {
-        File chromeDriver = new ClassPathResource("webdriver/chromedriver_mac64").getFile();
-        System.setProperty("webdriver.chrome.driver", chromeDriver.getPath());
+    public void init() {
+        System.setProperty("webdriver.chrome.driver", driverService.getDriverLocation());
         // Use headless mode for the ChromeDriver
         chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--headless");
