@@ -1,0 +1,52 @@
+Release Notes -- Apache PDFBox -- Version 3.0.0
+
+Introduction
+------------
+
+The Apache PDFBox library is an open source Java tool for working with PDF documents.
+
+This is the third release candidate for the upcoming major release 2.0.0 of PDFBox.
+This release contains a lot of improvements, fixes and refactorings. The API is 
+supposed to be stable, but we can't guarantee that there won't be any last changes
+to it before providing the final release candidate.
+
+For more details on these changes and all the other fixes and improvements
+included in this release, please refer to the following issues on the
+PDFBox issue tracker at https://issues.apache.org/jira/browse/PDFBOX.
+
+[PDFBOX-XXXX] - TODO
+
+Release Contents
+----------------
+
+This release consists of a single source archive packaged as a zip file.
+The archive can be unpacked with the jar tool from your JDK installation.
+See the README.txt file for instructions on how to build this release.
+
+The source archive is accompanied by SHA512 checksums and a PGP signature
+that you can use to verify the authenticity of your download.
+he public key used for the PGP signature can be found at
+https://www.apache.org/dist/pdfbox/KEYS.
+
+About Apache PDFBox
+-------------------
+
+Apache PDFBox is an open source Java library for working with PDF documents.
+This project allows creation of new PDF documents, manipulation of existing
+documents and the ability to extract content from documents. Apache PDFBox
+also includes several command line utilities. Apache PDFBox is published
+under the Apache License, Version 2.0.
+
+For more information, visit https://pdfbox.apache.org/
+
+About The Apache Software Foundation
+------------------------------------
+
+Established in 1999, The Apache Software Foundation provides organizational,
+legal, and financial support for more than 100 freely-available,
+collaboratively-developed Open Source projects. The pragmatic Apache License
+enables individual and commercial users to easily deploy Apache software;
+the Foundation's intellectual property framework limits the legal exposure
+of its 2,500+ contributors.
+
+For more information, visit https://www.apache.org/
