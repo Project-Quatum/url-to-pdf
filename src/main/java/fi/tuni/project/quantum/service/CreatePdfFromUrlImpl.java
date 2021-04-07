@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
+import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -25,7 +26,7 @@ import org.springframework.stereotype.Service;
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class CreatePdfFromUrlImpl implements CreatePdfFromUrl {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CreatePdfFromUrlImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CreatePdfFromUrl.class);
 
     private ChromeOptions chromeOptions;
 
@@ -43,35 +44,11 @@ public class CreatePdfFromUrlImpl implements CreatePdfFromUrl {
     }
 
     @Override
-    public ByteArrayOutputStream createPdf() {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        try (PDDocument doc = new PDDocument()) {
-            PDPage page = new PDPage();
-            doc.addPage(page);
-
-            PDImageXObject pdImage = PDImageXObject.createFromFile("test.png", doc);
-            try (PDPageContentStream contents = new PDPageContentStream(doc, page)) {
-                contents.drawImage(pdImage, 20, 20);
-            }
-
-            doc.save(outputStream);
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage(), e);
-        }
-        return outputStream;
-    }
-
-    @Override
-    public ByteArrayOutputStream createPdf(String url) {
-        //        if (StringUtils.isBlank(url) || Objects.isNull(chromeOptions)) {
-        //            return new PDDocument();
-        //        }
+    public ByteArrayOutputStream createPdf(@Nonnull String url) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-        PDDocument doc = null;
         WebDriver driver = null;
-        try {
-            doc = new PDDocument();
+        try (PDDocument doc = new PDDocument()) {
             driver = new ChromeDriver(chromeOptions);
             PDPage page = new PDPage();
             doc.addPage(page);
@@ -82,7 +59,6 @@ public class CreatePdfFromUrlImpl implements CreatePdfFromUrl {
             }
 
             doc.save(outputStream);
-            doc.close();
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
         } finally {
