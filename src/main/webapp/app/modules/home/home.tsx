@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { createMuiTheme } from '@material-ui/core/styles';
 import validator from 'validator';
-import axios from "axios";
+import axios from 'axios';
 
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -16,22 +16,19 @@ export type IHomeProp = StateProps;
 export const Home = (props: IHomeProp) => {
   const { account } = props;
 
-  const [url, setURL] = useState("");
+  const [url, setURL] = useState('');
   const [isConverting, setConvert] = useState(false);
 
-  const updateURL = (event) => {
-    const url = event.target.value;
-    setURL(url);
-  }
+  const updateURL = event => {
+    setURL(event.target.value);
+  };
 
-  const convertURL = (event) => {
-    var urlToTransfer = "" + url;
+  const convertURL = event => {
+    const urlToTransfer = '' + url;
 
-    if (!validator.isURL(urlToTransfer)){
-      alert("Please enter a valid URL address. ");
-    }
-
-    else {
+    if (!validator.isURL(urlToTransfer)) {
+      alert('Please enter a valid URL address. ');
+    } else {
       setConvert(true);
       // Haven't tested this, not sure it works!
       /*
@@ -50,7 +47,7 @@ export const Home = (props: IHomeProp) => {
       });*/
       setConvert(false);
     }
-  }
+  };
 
   const theme = createMuiTheme({
     palette: {
@@ -70,23 +67,9 @@ export const Home = (props: IHomeProp) => {
         </div>
       </header>
       <main>
-        <input
-          type="text"
-          id="urlInputField"
-          placeholder="Paste an URL here"
-          value={url}
-          onChange={updateURL}
-          disabled={isConverting}
-        />
-        <Button
-          variant="contained"
-          size="small"
-          color="primary"
-          disableElevation
-          onClick={convertURL}
-          disabled={isConverting}
-          >
-          {isConverting ? "Converting..." : "Convert"}
+        <input type="text" id="urlInputField" placeholder="Paste an URL here" value={url} onChange={updateURL} disabled={isConverting} />
+        <Button variant="contained" size="small" color="primary" disableElevation onClick={convertURL} disabled={isConverting}>
+          {isConverting ? 'Converting...' : 'Convert'}
         </Button>
       </main>
     </div>
