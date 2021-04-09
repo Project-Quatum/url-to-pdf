@@ -1,6 +1,11 @@
 import './home.scss';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import { createMuiTheme } from '@material-ui/core/styles';
+import validator from 'validator';
+import axios from "axios";
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
@@ -11,72 +16,80 @@ export type IHomeProp = StateProps;
 export const Home = (props: IHomeProp) => {
   const { account } = props;
 
+  const [url, setURL] = useState("");
+  const [isConverting, setConvert] = useState(false);
+
+  const updateURL = (event) => {
+    const url = event.target.value;
+    setURL(url);
+  }
+
+  const convertURL = (event) => {
+    var urlToTransfer = "" + url;
+
+    if (!validator.isURL(urlToTransfer)){
+      alert("Please enter a valid URL address. ");
+    }
+
+    else {
+      setConvert(true);
+      // Haven't tested this, not sure it works!
+      /*
+      const res = await axios.get("/screenshots", {url: urlToTransfer});
+      axios({
+        url: res,
+        method: 'GET',
+        responseType: 'blob',
+      }).then((response) => {
+        const url = window.URL.createURL(new Blob([response.data]));
+        const link = document.createElement.('a');
+        link.href = url;
+        link.setAttribute('download', 'file.pdf');
+        document.body.appendChild(link);
+        link();
+      });*/
+      setConvert(false);
+    }
+  }
+
+  const theme = createMuiTheme({
+    palette: {
+      primary: {
+        dark: '#2c387e',
+        main: '#3f51b5',
+        light: '#6573c3',
+      },
+    },
+  });
+
   return (
-    <Row>
-      <Col md="3" className="pad">
-        <span className="hipster rounded" />
-      </Col>
-      <Col md="9">
-        <h2>Welcome, Java Hipster!</h2>
-        <p className="lead">This is your homepage</p>
-        {account && account.login ? (
-          <div>
-            <Alert color="success">You are logged in as user {account.login}.</Alert>
-          </div>
-        ) : (
-          <div>
-            <Alert color="warning">
-              If you want to
-              <span>&nbsp;</span>
-              <Link to="/login" className="alert-link">
-                {' '}
-                sign in
-              </Link>
-              , you can try the default accounts:
-              <br />- Administrator (login=&quot;admin&quot; and password=&quot;admin&quot;)
-              <br />- User (login=&quot;user&quot; and password=&quot;user&quot;).
-            </Alert>
-          </div>
-        )}
-        <p>If you have any question on JHipster:</p>
-
-        <ul>
-          <li>
-            <a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer">
-              JHipster homepage
-            </a>
-          </li>
-          <li>
-            <a href="http://stackoverflow.com/tags/jhipster/info" target="_blank" rel="noopener noreferrer">
-              JHipster on Stack Overflow
-            </a>
-          </li>
-          <li>
-            <a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener noreferrer">
-              JHipster bug tracker
-            </a>
-          </li>
-          <li>
-            <a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">
-              JHipster public chat room
-            </a>
-          </li>
-          <li>
-            <a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer">
-              follow @jhipster on Twitter
-            </a>
-          </li>
-        </ul>
-
-        <p>
-          If you like JHipster, do not forget to give us a star on{' '}
-          <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">
-            GitHub
-          </a>
-          !
-        </p>
-      </Col>
-    </Row>
+    <div className="App">
+      <header className="header">
+        <div>
+          <h1>A website to PDF converter</h1>
+        </div>
+      </header>
+      <main>
+        <input
+          type="text"
+          id="urlInputField"
+          placeholder="Paste an URL here"
+          value={url}
+          onChange={updateURL}
+          disabled={isConverting}
+        />
+        <Button
+          variant="contained"
+          size="small"
+          color="primary"
+          disableElevation
+          onClick={convertURL}
+          disabled={isConverting}
+          >
+          {isConverting ? "Converting..." : "Convert"}
+        </Button>
+      </main>
+    </div>
   );
 };
 
