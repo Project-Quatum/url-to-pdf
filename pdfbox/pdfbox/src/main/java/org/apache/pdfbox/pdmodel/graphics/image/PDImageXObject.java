@@ -31,7 +31,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.ref.SoftReference;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 import javax.imageio.ImageIO;
+
+import org.apache.commons.exec.util.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pdfbox.cos.COSArray;
@@ -54,6 +58,9 @@ import org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace;
 import org.apache.pdfbox.pdmodel.graphics.color.PDDeviceGray;
 import org.apache.pdfbox.util.filetypedetector.FileType;
 import org.apache.pdfbox.util.filetypedetector.FileTypeDetector;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 
 /**
  * An Image XObject.
@@ -905,5 +912,32 @@ public final class PDImageXObject extends PDXObject implements PDImage
     public void setOptionalContent(PDPropertyList oc)
     {
         getCOSObject().setItem(COSName.OC, oc);
+    }
+
+    /**
+     * Create a PDImageXObject from an image file, see {@link #createFromFileByExtension(File, PDDocument)} for
+     * more details.
+     *
+     * @param url the website url
+     * @param doc the document that shall use this PDImageXObject.
+     * @param driver the webdriver to generate screenshot of image.
+     * @return a PDImageXObject.
+     * @throws IOException if there is an error when reading the file or creating the
+     * PDImageXObject, or if the image type is not supported.
+     */
+    public static PDImageXObject createFromUrl(String url, PDDocument doc, WebDriver driver) throws IOException
+    {
+        // Will throw NullPointerException
+        Objects.requireNonNull(url, "Cannot take screenshot of an empty url!");
+        Objects.requireNonNull(doc, "Cannot take screenshot without document page to add");
+        Objects.requireNonNull(driver, "Cannot take screenshot without webdriver");
+
+        if (url.length() == 0) {
+            throw new IllegalArgumentException("Can not take screenshot of an empty url!");
+        }
+
+        driver.get(url);
+        File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        return createFromFileByExtension(screenshot, doc);
     }
 }
