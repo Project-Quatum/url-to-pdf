@@ -1,21 +1,16 @@
 import './home.scss';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import { createMuiTheme } from '@material-ui/core/styles';
 import validator from 'validator';
 import axios from 'axios';
 
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
 
 import { connect } from 'react-redux';
-import { Row, Col, Alert } from 'reactstrap';
+import fileDownload from 'js-file-download';
 
 export type IHomeProp = StateProps;
 
 export const Home = (props: IHomeProp) => {
-  const { account } = props;
-
   const [url, setURL] = useState('');
   const [isConverting, setConvert] = useState(false);
 
@@ -24,40 +19,25 @@ export const Home = (props: IHomeProp) => {
   };
 
   const convertURL = event => {
-    const urlToTransfer = '' + url;
+    const urlToTransfer = url.trim();
 
     if (!validator.isURL(urlToTransfer)) {
       alert('Please enter a valid URL address. ');
     } else {
       setConvert(true);
-      // Haven't tested this, not sure it works!
-      /*
-      const res = await axios.get("/screenshots", {url: urlToTransfer});
       axios({
-        url: res,
-        method: 'GET',
+        url: '/screenshots',
+        method: 'POST',
         responseType: 'blob',
-      }).then((response) => {
-        const url = window.URL.createURL(new Blob([response.data]));
-        const link = document.createElement.('a');
-        link.href = url;
-        link.setAttribute('download', 'file.pdf');
-        document.body.appendChild(link);
-        link();
-      });*/
+        data: {
+          url: urlToTransfer,
+        },
+      }).then(response => {
+        fileDownload(response.data, 'screenshot.pdf');
+      });
       setConvert(false);
     }
   };
-
-  const theme = createMuiTheme({
-    palette: {
-      primary: {
-        dark: '#2c387e',
-        main: '#3f51b5',
-        light: '#6573c3',
-      },
-    },
-  });
 
   return (
     <div className="App">
