@@ -37,6 +37,7 @@ before_install:
   - npm install -g npm
   - node -v
   - npm -v
+  - mvn clean install -f pdfbox/pom.xml -DskipTests
 install:
   - npm install
 script:
