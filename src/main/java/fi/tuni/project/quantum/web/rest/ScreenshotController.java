@@ -28,8 +28,8 @@ public class ScreenshotController {
     private CreatePdfFromUrl createPdfFromUrl;
 
     @PostMapping(value = "/screenshots")
-    public ResponseEntity<Object> createScreenshotPDF(@RequestBody String url) {
-        if (!validUrl(url)) {
+    public ResponseEntity<Object> createScreenshotPDF(@RequestBody ScreenshotUrl screenshotUrl) {
+        if (!validUrl(screenshotUrl.getUrl())) {
             ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, ERROR_MESSAGE);
             return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
         }
@@ -40,7 +40,7 @@ public class ScreenshotController {
         header.add("Pragma", "no-cache");
         header.add("Expires", "0");
 
-        ByteArrayOutputStream outputStream = createPdfFromUrl.createPdf(url);
+        ByteArrayOutputStream outputStream = createPdfFromUrl.createPdf(screenshotUrl.getUrl());
         ByteArrayResource resource = new ByteArrayResource(outputStream.toByteArray());
 
         return ResponseEntity
